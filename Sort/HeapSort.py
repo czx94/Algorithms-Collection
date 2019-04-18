@@ -47,12 +47,12 @@ class MaxHeap(object):
 
         self.tree_map = [['  ' for _ in range(2**depth-1)] for i in range(depth)]
 
-        self.draw_sub(1, list(range(1,2**depth)))
+        self.draw_sub_element(1, list(range(1,2**depth)))
 
         for layer in self.tree_map:
             print(''.join(layer))
 
-    def draw_sub(self, i, index_list):
+    def draw_sub_element(self, i, index_list):
         if i > len(self.heap) or index_list == []:
             return
 
@@ -65,11 +65,18 @@ class MaxHeap(object):
         left = self.left(i)
         right = self.right(i)
 
-        self.draw_sub(left, index_list[:index_list.index(split)])
-        self.draw_sub(right, index_list[index_list.index(split)+1:])
+        self.draw_sub_element(left, index_list[:index_list.index(split)])
+        self.draw_sub_element(right, index_list[index_list.index(split)+1:])
+
+    def add_element(self, value):
+        self.heap.append(value)
+        self.build_max_heap()
+        self.show_heap()
 
 
 if __name__ == '__main__':
-    list_object = list(np.random.choice(100, size=18, replace=False))
+    list_object = list(np.random.choice(list(range(10,100)), size=36, replace=False))
     my_heap = MaxHeap(list_object)
     my_heap.show_heap()
+
+    my_heap.add_element(11)
