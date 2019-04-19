@@ -14,7 +14,6 @@ def count_sort(list_object, lower, upper):
     for i in range(lower+1, upper):
         count_dict[i] += count_dict[i-1]
 
-
     for i in range(len(list_object)):
         sorted_list[count_dict[list_object[i]]-1] = list_object[i]
         count_dict[list_object[i]] -= 1
