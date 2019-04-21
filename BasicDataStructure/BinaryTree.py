@@ -11,53 +11,97 @@ class Node(object):
 
 
 class BinaryTree(object):
-    def __init__(self, elements_number):
-        self.elements_number = elements_number
+    def __init__(self, elements):
+        self.elements = elements
         self.root = Node()
-        self.range = list(range(0, 100))
-        self.node_list = []
-        self.candidate_list = [self.root]
+
         self.build_tree()
+
+        # object to viz tree
         self.dot = Digraph(comment='Binary Tree')
 
+        # define the order to visit a node
+        self.count = 0
+
     def build_tree(self):
-        while self.elements_number > len(self.node_list):
-            root = np.random.choice(self.candidate_list, 1)[0]
-            self.candidate_list.remove(root)
+        elements = self.elements
+        node_list = []
+        candidate_list = [self.root]
+        while elements:
+            root = np.random.choice(candidate_list, 1)[0]
+            candidate_list.remove(root)
 
-
-            root.value = np.random.choice(self.range, 1)[0]
-            self.node_list.append(root)
+            root.value = elements.pop()
+            node_list.append(root)
 
             root.left = Node()
             root.right = Node()
 
-            self.candidate_list.append(root.left)
-            self.candidate_list.append(root.right)
-
+            candidate_list.append(root.left)
+            candidate_list.append(root.right)
 
     def preorder(self, root):
-        if not root:
+        if not root or not root.value:
             return
+
         print(root.value)
+        root.order = self.count
+        self.count += 1
+
         self.preorder(root.left)
         self.preorder(root.right)
 
     def inorder(self, root):
-        if not root:
+        if not root or not root.value:
             return
 
-        if not root.left and not root.right:
+        if not root.left.value and not root.right.value:
             print(root.value)
+            root.order = self.count
+            self.count += 1
+
         else:
-            self.inorder(root.value)
+            self.inorder(root.left)
+
             print(root.value)
+            root.order = self.count
+            self.count += 1
+
             self.inorder(root.right)
 
     def postorder(self, root):
-        if not root:
+        if not root or not root.value:
             return
 
+        if not root.left.value and not root.right.value:
+            print(root.value)
+            root.order = self.count
+            self.count += 1
+
+        else:
+            self.inorder(root.left)
+
+            self.inorder(root.right)
+
+            print(root.value)
+            root.order = self.count
+            self.count += 1
+
+    def levelorder(self):
+        candidate_layer = [self.root]
+
+        while candidate_layer:
+            this_layer, candidate_layer = candidate_layer, []
+
+            for node in this_layer:
+                print(node.value)
+                node.order = self.count
+                self.count += 1
+
+                if node.left.value:
+                    candidate_layer.append(node.left)
+                if node.right.value:
+                    candidate_layer.append(node.right)
 
     def search(self):
         raise Exception('Not implemented error')
@@ -94,6 +138,6 @@ class BinaryTree(object):
         self.dot.render(save_path)
 
 if __name__ == '__main__':
-    binary_tree = BinaryTree(15)
-    binary_tree.preorder(binary_tree.root)
+    binary_tree = BinaryTree(list(np.random.choice(list(range(100)), 15)))
+    binary_tree.levelorder()
     binary_tree.print_tree()
