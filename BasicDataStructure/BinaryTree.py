@@ -1,6 +1,7 @@
 import numpy as np
 from graphviz import Digraph
 import uuid
+import re
 
 class Node(object):
     def __init__(self, value=None, left=None, right=None):
@@ -44,7 +45,6 @@ class BinaryTree(object):
         if not root or not root.value:
             return
 
-        print(root.value)
         root.order = self.count
         self.count += 1
 
@@ -109,7 +109,7 @@ class BinaryTree(object):
     def insert(self):
         raise Exception('Not implemented error')
 
-    def print_tree(self, save_path='./Binary_Tree.gv', label=True):
+    def print_tree(self, label=True):
 
         # colors for labels of nodes
         colors = ['skyblue', 'tomato', 'orange', 'purple', 'green', 'yellow', 'pink', 'red']
@@ -135,9 +135,11 @@ class BinaryTree(object):
             self.dot.node(root_tag, ':'.join([str(self.root.value), str(self.root.order)]), style='filled', color=np.random.choice(colors, 1)[0])
             print_node(self.root, root_tag)
 
+        save_path = 'bt'+'.gv'
         self.dot.render(save_path)
 
 if __name__ == '__main__':
-    binary_tree = BinaryTree(list(np.random.choice(list(range(100)), 15)))
+    element_list = list(np.random.choice(list(range(100)), 15))
+    binary_tree = BinaryTree(element_list)
     binary_tree.levelorder()
     binary_tree.print_tree()
