@@ -1,7 +1,6 @@
 import numpy as np
 from graphviz import Digraph
 import uuid
-import re
 
 class Node(object):
     def __init__(self, value=None, left=None, right=None):
@@ -25,24 +24,26 @@ class BinaryTree(object):
         self.count = 0
 
     def build_tree(self):
-        elements = self.elements
-        node_list = []
-        candidate_list = [self.root]
-        while elements:
-            root = np.random.choice(candidate_list, 1)[0]
-            candidate_list.remove(root)
+        for element in self.elements:
+            self.insert(element)
 
-            root.value = elements.pop()
-            node_list.append(root)
+    def insert(self, element):
+        root = self.root
+        while root.value:
+            print(root)
+            if np.random.random() > 0.5:
+                if not root.left:
+                    root.left = Node()
+                root = root.left
+            else:
+                if not root.right:
+                    root.right = Node()
+                root = root.right
 
-            root.left = Node()
-            root.right = Node()
-
-            candidate_list.append(root.left)
-            candidate_list.append(root.right)
+        root.value = element
 
     def preorder(self, root):
-        if not root or not root.value:
+        if not root:
             return
 
         root.order = self.count
@@ -52,10 +53,10 @@ class BinaryTree(object):
         self.preorder(root.right)
 
     def inorder(self, root):
-        if not root or not root.value:
+        if not root:
             return
 
-        if not root.left.value and not root.right.value:
+        if not root.left and not root.right:
             print(root.value)
             root.order = self.count
             self.count += 1
@@ -70,10 +71,10 @@ class BinaryTree(object):
             self.inorder(root.right)
 
     def postorder(self, root):
-        if not root or not root.value:
+        if not root:
             return
 
-        if not root.left.value and not root.right.value:
+        if not root.left and not root.right:
             print(root.value)
             root.order = self.count
             self.count += 1
@@ -98,15 +99,12 @@ class BinaryTree(object):
                 node.order = self.count
                 self.count += 1
 
-                if node.left.value:
+                if node.left:
                     candidate_layer.append(node.left)
-                if node.right.value:
+                if node.right:
                     candidate_layer.append(node.right)
 
     def search(self):
-        raise Exception('Not implemented error')
-
-    def insert(self):
         raise Exception('Not implemented error')
 
     def print_tree(self, label=True):
@@ -116,14 +114,14 @@ class BinaryTree(object):
 
         def print_node(node, node_tag):
             color = np.random.choice(colors, 1)[0]
-            if node.left is not None and node.left.value:
+            if node.left is not None:
                 left_tag = str(uuid.uuid1())
                 self.dot.node(left_tag, ':'.join([str(node.left.value), str(node.left.order)]), style='filled', color=color)
                 label_string = 'L' if label else ''
                 self.dot.edge(node_tag, left_tag, label=label_string)
                 print_node(node.left, left_tag)
 
-            if node.right is not None and node.right.value:
+            if node.right is not None:
                 right_tag = str(uuid.uuid1())
                 self.dot.node(right_tag, ':'.join([str(node.right.value), str(node.right.order)]), style='filled', color=color)
                 label_string = 'R' if label else ''
@@ -141,5 +139,5 @@ class BinaryTree(object):
 if __name__ == '__main__':
     element_list = list(np.random.choice(list(range(100)), 15))
     binary_tree = BinaryTree(element_list)
-    binary_tree.levelorder()
+    binary_tree.inorder(binary_tree.root)
     binary_tree.print_tree()
