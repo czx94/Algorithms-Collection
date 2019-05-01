@@ -129,6 +129,8 @@ class BinaryTree(object):
         candidate_nodes = [root]
         final_iteration = []
 
+        # visit the nodes with reverse order: parent, right, left
+        # so the nodes are pushed to a stack with order: left, right, parent
         while candidate_nodes:
             current_node = candidate_nodes.pop()
             if current_node.left:
@@ -138,6 +140,7 @@ class BinaryTree(object):
 
             final_iteration.append(current_node)
 
+        # just pop the stack iteratively
         while final_iteration:
             node = final_iteration.pop()
             node.order = self.count
