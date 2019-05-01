@@ -1,16 +1,21 @@
 import numpy as np
 from graphviz import Digraph
 import uuid
+import os
 
 class Node(object):
     def __init__(self, value=None, left=None, right=None):
         self.value = value
         self.left = left
         self.right = right
-        self.order = 0
+        self.order = None
 
 
 class BinaryTree(object):
+    '''
+    Common binary tree, generated randomly
+    Support several travesal methods
+    '''
     def __init__(self, elements):
         self.elements = elements
         self.root = Node()
@@ -23,14 +28,15 @@ class BinaryTree(object):
         # define the order to visit a node
         self.count = 0
 
+    # build the binary tree with given elements
     def build_tree(self):
         for element in self.elements:
             self.insert(element)
 
+    # insert element randomly
     def insert(self, element):
         root = self.root
         while root.value:
-            print(root)
             if np.random.random() > 0.5:
                 if not root.left:
                     root.left = Node()
@@ -42,6 +48,7 @@ class BinaryTree(object):
 
         root.value = element
 
+    # preorder recursive travesal
     def preorder(self, root):
         if not root:
             return
@@ -52,6 +59,18 @@ class BinaryTree(object):
         self.preorder(root.left)
         self.preorder(root.right)
 
+    # preorder iterative travesal
+    def preorder_iterative(self, root):
+        candidate_nodes = [root]
+        while candidate_nodes:
+            current_node = candidate_nodes.pop()
+            if current_node:
+                current_node.order = self.count
+                self.count += 1
+                candidate_nodes.append(current_node.right)
+                candidate_nodes.append(current_node.left)
+
+    # inorder recursive travesal
     def inorder(self, root):
         if not root:
             return
@@ -70,6 +89,23 @@ class BinaryTree(object):
 
             self.inorder(root.right)
 
+    # inorder iterative travesal
+    def inorder_iterative(self, root):
+        candidate_nodes = [root]
+        while candidate_nodes or root:
+            # visit always the left subtree till the end and append it to the stack
+            while root:
+                candidate_nodes.append(root)
+                root = root.left
+
+            # while there's no left subtree, pop the stack and note the node then visit the right subtree
+            if not root:
+                root = candidate_nodes.pop()
+                root.order = self.count
+                self.count += 1
+                root = root.right
+
+    # postorder resursive travesal
     def postorder(self, root):
         if not root:
             return
@@ -80,14 +116,34 @@ class BinaryTree(object):
             self.count += 1
 
         else:
-            self.inorder(root.left)
+            self.postorder(root.left)
 
-            self.inorder(root.right)
+            self.postorder(root.right)
 
             print(root.value)
             root.order = self.count
             self.count += 1
 
+    # postorder iterative travesal
+    def postorder_iterative(self, root):
+        candidate_nodes = [root]
+        final_iteration = []
+
+        while candidate_nodes:
+            current_node = candidate_nodes.pop()
+            if current_node.left:
+                candidate_nodes.append(current_node.left)
+            if current_node.right:
+                candidate_nodes.append(current_node.right)
+
+            final_iteration.append(current_node)
+
+        while final_iteration:
+            node = final_iteration.pop()
+            node.order = self.count
+            self.count += 1
+
+    # levelorder travesal using 2 stacks
     def levelorder(self):
         candidate_layer = [self.root]
 
@@ -133,11 +189,13 @@ class BinaryTree(object):
             self.dot.node(root_tag, ':'.join([str(self.root.value), str(self.root.order)]), style='filled', color=np.random.choice(colors, 1)[0])
             print_node(self.root, root_tag)
 
-        save_path = 'bt'+'.gv'
+        # define file name by script name
+        base_name = os.path.basename(__file__)[:-3]
+        save_path = base_name +'.gv'
         self.dot.render(save_path)
 
 if __name__ == '__main__':
     element_list = list(np.random.choice(list(range(100)), 15))
     binary_tree = BinaryTree(element_list)
-    binary_tree.inorder(binary_tree.root)
+    binary_tree.postorder_iterative(binary_tree.root)
     binary_tree.print_tree()

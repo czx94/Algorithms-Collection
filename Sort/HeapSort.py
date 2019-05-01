@@ -25,20 +25,23 @@ class MaxHeap(object):
             self.heap[i-1], self.heap[largest_index-1] = self.heap[largest_index-1], self.heap[i-1]
             self.max_heapify(largest_index)
 
-
     def build_max_heap(self):
         size = len(self.heap)
         for i in range(math.floor(size/2), 0, -1):
             self.max_heapify(i)
 
+    # index for the left subtree of current node
     def left(self, i):
         return 2*i
 
+    # index for the right subtree of current node
     def right(self, i):
         return 2*i+1
 
+    # index for the parent of current node
     def parent(self, i):
         return math.floor(i/2)
+
 
     def show_heap(self):
         print(self.heap)
