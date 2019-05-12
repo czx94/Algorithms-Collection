@@ -43,28 +43,10 @@ class RBTree(BST):
         else:
             return node
 
-
-    def findMin(self, node):
-        """
-        find the elment with min value among subnode in node
-        :param node: the root of the subtree
-        :return: the min node
-        """
-        temp_node = node
-        while temp_node.left:
-            temp_node = temp_node.left
-        return temp_node
-
-    def findMax(self, node):
-        """
-        find the elment with max value among subnode in node
-        :param node: the root of the subtree
-        :return: the max node
-        """
-        temp_node = node
-        while temp_node.right:
-            temp_node = temp_node.right
-        return temp_node
+    def tree_minimum(self, node):
+        while node.left != self.nil:
+            node = node.left
+        return node
 
     def transplant(self, tree, node_u, node_v):
         """
@@ -108,7 +90,7 @@ class RBTree(BST):
 
         # 3
         right.parent = parent
-        if not parent:
+        if parent == self.nil:
             self.root = right
         else:
             if parent.left == node:
@@ -140,7 +122,7 @@ class RBTree(BST):
 
         # 3
         left.parent = parent
-        if not parent:
+        if parent == self.nil:
             self.root = left
         else:
             if parent.left == node:
@@ -179,7 +161,6 @@ class RBTree(BST):
     def insert_fixup(self, node):
         # if node parent is black or node is root then everything is ok
         while node.parent.color == "RED":
-
             # node.parent.parent must exist because node.parent is red
             # we deal the left situation first then right
             if node.parent == node.parent.parent.left:
@@ -192,15 +173,16 @@ class RBTree(BST):
                     node.parent.parent.color = 'RED'
                     node = node.parent.parent
 
-                # case 2: uncle is black and node is right child
-                elif node == node.parent.right:
-                    node = node.parent
-                    self.left_rotate(node)
+                else:
+                    # case 2: uncle is black and node is right child
+                    if node == node.parent.right:
+                        node = node.parent
+                        self.left_rotate(node)
 
-                # case 3: uncle is black and node is left child
-                node.parent.color = 'BLACK'
-                node.parent.parent.color = 'RED'
-                self.right_rotate(node.parent.parent)
+                    # case 3: uncle is black and node is left child
+                    node.parent.color = 'BLACK'
+                    node.parent.parent.color = 'RED'
+                    self.right_rotate(node.parent.parent)
 
             # symetry
             else:
@@ -213,15 +195,16 @@ class RBTree(BST):
                     node.parent.parent.color = 'RED'
                     node = node.parent.parent
 
-                # case 2: uncle is black and node is left child
-                elif node == node.parent.left:
-                    node = node.parent
-                    self.right_rotate(node)
+                else:
+                    # case 2: uncle is black and node is left child
+                    if node == node.parent.left:
+                        node = node.parent
+                        self.right_rotate(node)
 
-                # case 3: uncle is black and node is right child
-                node.parent.color = 'BLACK'
-                node.parent.parent.color = 'RED'
-                self.left_rotate(node.parent.parent)
+                    # case 3: uncle is black and node is right child
+                    node.parent.color = 'BLACK'
+                    node.parent.parent.color = 'RED'
+                    self.left_rotate(node.parent.parent)
 
         # keep root color black!
         self.root.color = "BLACK"
@@ -256,13 +239,111 @@ class RBTree(BST):
 
         if self.root:
             root_tag = str(uuid.uuid1())
-            dot.node(root_tag, ':'.join([str(self.root.value), str(self.root.order)]), style='filled', color='green')
+            color = self.root.color
+            if color == 'RED':
+                color = 'red'
+            else:
+                color = 'green'
+            dot.node(root_tag, ':'.join([str(self.root.value), str(self.root.order)]), style='filled', color=color)
             print_node(self.root, root_tag)
 
         # define file name by script name
         base_name = os.path.basename(__file__)[:-3]
         save_path = base_name +'.gv'
         dot.render(save_path)
+
+    def delete(self, node):
+        current_node = node
+        current_node_color = current_node.color
+
+        if node.left == self.nil:
+            temp = node.right
+            self.transplant(node, node.right)
+
+        elif node.right == self.nil:
+            temp = node.left
+            self.transplant(node, node.left)
+
+        else:
+            current_node = self.tree_minimum(node.right)
+            current_node_color = current_node.color
+            temp = current_node.right
+
+            if current_node.parent == node:
+                temp.parent = current_node
+            else:
+                self.transplant(current_node, current_node.right)
+                current_node.right = node.right
+                current_node.parent = current_node
+
+            self.transplant(node, current_node)
+            current_node.left = node.left
+            current_node.left.parent = current_node
+            current_node.color = node.color
+
+        if current_node_color == 'BLACK':
+            self.delete_fixup(temp)
+
+
+    def delete_fixup(self, node):
+        while node != self.root and node.color == 'BLACK':
+            # deal with left child situation
+            if node == node.parent.left:
+                brother = node.parent.right
+                # case 1
+                if brother.color == 'RED':
+                    brother.color = 'BLACK'
+                    node.parent.color = 'RED'
+                    self.right_rotate(node.parent)
+                    brother = node.parent.right
+
+                # case 2
+                if brother.left.color == 'BLACK' and brother.right.color == 'BLACK':
+                    brother.color = 'RED'
+                    node = node.parent
+                else:
+                    # case 3
+                    if brother.right.color == 'BLACK':
+                        brother.left.color = 'BLACK'
+                        brother.color = 'RED'
+                        self.right_rotate(brother)
+                        brother = node.parent.right
+
+                    # case 4
+                    brother.color = node.parent.color
+                    node.parent.color = 'BLACK'
+                    brother.right.color = 'BLACK'
+                    self.left_rotate(node.parent)
+                    node = self.root
+
+            # deal with right child situation
+            else:
+                brother = node.parent.left
+                if brother.color == 'RED':
+                    brother.color = 'BLACK'
+                    node.parent.color = 'RED'
+                    self.left_rotate(node.parent)
+                    brother = node.parent.left
+
+                if brother.right.color == 'BLACK' and brother.left.color == 'BLACK':
+                    brother.color = 'RED'
+                    node = node.parent
+                else:
+                    if brother.left.color == 'BLACK':
+                        brother.right.color = 'BLACK'
+                        brother.color = 'RED'
+                        self.left_rotate(brother)
+                        brother = node.parent.left
+
+                    brother.color = node.parent.color
+                    node.parent.color = 'BLACK'
+                    brother.left.color = 'BLACK'
+                    self.right_rotate(node.parent)
+                    node = self.root
+
+        node.color = 'BLACK'
+
+
 
     def preorder(self, root):
         if not root.value:
@@ -273,10 +354,9 @@ class RBTree(BST):
         self.preorder(root.right)
 
 if __name__ == '__main__':
-    #unsolved case
-    #[3, 41, 30, 71, 63, 24, 43, 68, 78, 27]
+    #unsolved cases
     element_list = list(np.random.choice(list(range(100)), 10, replace=False))
     print(element_list)
     rb_tree = RBTree(element_list)
-    rb_tree.preorder(rb_tree.root)
+    # rb_tree.preorder(rb_tree.root)
     rb_tree.print_tree()

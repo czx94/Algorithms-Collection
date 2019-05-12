@@ -29,14 +29,30 @@ def topological_sort(graph):
 
     print(S)
 
+# path length to a vertex in a graph with single origin and unweighted edge
+def unweighted(v):
+    queue=[]
+    path_length={}
+    path_length[v]=0
+    queue.append(v)
 
-def unweighted():
-    pass
+    # something like dynamic programming
+    while queue:
+        v=queue.pop(0)
+        for i in v.get_neighbors():
+            if i not in path_length:
+                path_length[i]=path_length[v]+1
+                queue.append(i)
+
+    print(path_length)
 
 def Dijkstra():
     pass
 
 def Prim():
+    pass
+
+def Kruskal():
     pass
 
 if __name__ == '__main__':
@@ -54,3 +70,5 @@ if __name__ == '__main__':
     # top sort
     topological_sort(graph)
 
+    # unweighted path length
+    unweighted(graph.vertexlist['a'])

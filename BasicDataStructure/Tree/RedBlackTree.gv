@@ -1,0 +1,22 @@
+// RBTree
+digraph {
+	"bcf18964-74cc-11e9-a95b-d0817abd6a32" [label="56:None" color=green style=filled]
+	"bcf18e3c-74cc-11e9-a95b-d0817abd6a32" [label="20:None" color=red style=filled]
+	"bcf18964-74cc-11e9-a95b-d0817abd6a32" -> "bcf18e3c-74cc-11e9-a95b-d0817abd6a32" [label=L]
+	"bcf19044-74cc-11e9-a95b-d0817abd6a32" [label="7:None" color=green style=filled]
+	"bcf18e3c-74cc-11e9-a95b-d0817abd6a32" -> "bcf19044-74cc-11e9-a95b-d0817abd6a32" [label=L]
+	"bcf1921a-74cc-11e9-a95b-d0817abd6a32" [label="3:None" color=red style=filled]
+	"bcf19044-74cc-11e9-a95b-d0817abd6a32" -> "bcf1921a-74cc-11e9-a95b-d0817abd6a32" [label=L]
+	"bcf19396-74cc-11e9-a95b-d0817abd6a32" [label="19:None" color=red style=filled]
+	"bcf19044-74cc-11e9-a95b-d0817abd6a32" -> "bcf19396-74cc-11e9-a95b-d0817abd6a32" [label=R]
+	"bcf194fe-74cc-11e9-a95b-d0817abd6a32" [label="39:None" color=green style=filled]
+	"bcf18e3c-74cc-11e9-a95b-d0817abd6a32" -> "bcf194fe-74cc-11e9-a95b-d0817abd6a32" [label=R]
+	"bcf19652-74cc-11e9-a95b-d0817abd6a32" [label="28:None" color=red style=filled]
+	"bcf194fe-74cc-11e9-a95b-d0817abd6a32" -> "bcf19652-74cc-11e9-a95b-d0817abd6a32" [label=L]
+	"bcf197e2-74cc-11e9-a95b-d0817abd6a32" [label="87:None" color=green style=filled]
+	"bcf18964-74cc-11e9-a95b-d0817abd6a32" -> "bcf197e2-74cc-11e9-a95b-d0817abd6a32" [label=R]
+	"bcf1994a-74cc-11e9-a95b-d0817abd6a32" [label="77:None" color=red style=filled]
+	"bcf197e2-74cc-11e9-a95b-d0817abd6a32" -> "bcf1994a-74cc-11e9-a95b-d0817abd6a32" [label=L]
+	"bcf19a9e-74cc-11e9-a95b-d0817abd6a32" [label="90:None" color=red style=filled]
+	"bcf197e2-74cc-11e9-a95b-d0817abd6a32" -> "bcf19a9e-74cc-11e9-a95b-d0817abd6a32" [label=R]
+}
