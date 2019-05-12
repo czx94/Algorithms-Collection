@@ -1,9 +1,10 @@
-import numpy as np
-from BinaryTree import *
+from Tree.BinaryTree import *
+
 
 class BST(BinaryTree):
-    def __init__(self, elements):
-        super(BST, self).__init__(elements)
+    def __init__(self, elements, root=None):
+        super(BST, self).__init__(elements, root=root)
+        # object to viz tree
 
     def build_tree(self):
         for element in self.elements:
@@ -11,6 +12,10 @@ class BST(BinaryTree):
 
     def insert(self, element):
         root = self.root
+        if not root:
+            self.root = Node(element)
+            return
+
         while root.value:
             if root.value > element:
                 if not root.left:

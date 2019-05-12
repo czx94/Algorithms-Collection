@@ -16,9 +16,9 @@ class BinaryTree(object):
     Common binary tree, generated randomly
     Support several travesal methods
     '''
-    def __init__(self, elements):
+    def __init__(self, elements, root=None):
         self.elements = elements
-        self.root = Node()
+        self.root = root
 
         self.build_tree()
 
@@ -36,6 +36,10 @@ class BinaryTree(object):
     # insert element randomly
     def insert(self, element):
         root = self.root
+        if not root:
+            self.root = Node(element)
+            return
+
         while root.value:
             if np.random.random() > 0.5:
                 if not root.left:
@@ -76,14 +80,12 @@ class BinaryTree(object):
             return
 
         if not root.left and not root.right:
-            print(root.value)
             root.order = self.count
             self.count += 1
 
         else:
             self.inorder(root.left)
 
-            print(root.value)
             root.order = self.count
             self.count += 1
 
@@ -111,7 +113,6 @@ class BinaryTree(object):
             return
 
         if not root.left and not root.right:
-            print(root.value)
             root.order = self.count
             self.count += 1
 
@@ -120,7 +121,6 @@ class BinaryTree(object):
 
             self.postorder(root.right)
 
-            print(root.value)
             root.order = self.count
             self.count += 1
 
@@ -154,7 +154,6 @@ class BinaryTree(object):
             this_layer, candidate_layer = candidate_layer, []
 
             for node in this_layer:
-                print(node.value)
                 node.order = self.count
                 self.count += 1
 

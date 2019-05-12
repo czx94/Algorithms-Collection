@@ -1,0 +1,282 @@
+from Tree.BinarySearchTree import BST
+from Tree.BinaryTree import Node
+import numpy as np
+import uuid
+import os
+from graphviz import Digraph
+
+
+class RBNode(Node):
+    def __init__(self, value = None, left = None, right = None, color = 'BLACK', parent = None):
+        super(RBNode, self).__init__(value, left, right)
+        self.color = color
+        self.parent = parent
+
+    def show_color(self):
+        return self.color
+
+    def set_color(self, color):
+        self.color = color
+
+class RBTree(BST):
+    '''
+    5 rules:
+    1.Each node is either red or black.
+    2.The root is black.
+    3.All leaves (NIL) are black.
+    4.If a node is red, then both its children are black.
+    5.Every path from a given node to any of its dscendant NIL nodes contains the same number of black nodes.
+    '''
+    def __init__(self, elements):
+        self.nil = RBNode()
+        root = RBNode(color='BLACK')
+        super(RBTree, self).__init__(elements, root = root)
+
+    # find the node with value key
+    def find(self, key, node):
+        if not node:
+            return None
+        elif key < node.data:
+            return self.find(key, node.left)
+        elif key > node.data:
+            return self.find(key, node.right)
+        else:
+            return node
+
+
+    def findMin(self, node):
+        """
+        find the elment with min value among subnode in node
+        :param node: the root of the subtree
+        :return: the min node
+        """
+        temp_node = node
+        while temp_node.left:
+            temp_node = temp_node.left
+        return temp_node
+
+    def findMax(self, node):
+        """
+        find the elment with max value among subnode in node
+        :param node: the root of the subtree
+        :return: the max node
+        """
+        temp_node = node
+        while temp_node.right:
+            temp_node = temp_node.right
+        return temp_node
+
+    def transplant(self, tree, node_u, node_v):
+        """
+        exchange node v and u
+        :param tree: tree root
+        :param node_u: node to be replaced
+        :param node_v: node to replace
+        :return: None
+        """
+        if not node_u.parent:
+            tree.root = node_v
+        elif node_u == node_u.parent.left:
+            node_u.parent.left = node_v
+        elif node_u == node_u.parent.right:
+            node_u.parent.right = node_v
+        # 加一下为空的判断
+        if node_v:
+            node_v.parent = node_u.parent
+
+    def left_rotate(self, node):
+        '''
+             *     parent               parent
+             *    /                       /
+             *   node                   right
+             *  / \                     / \
+             * ln  right   ----->     node  ry
+             *    / \                 / \
+             *   ly ry               ln ly
+        '''
+        parent = node.parent
+        right = node.right
+
+        # 1
+        node.right = right.left
+        if right.left != self.nil:
+            right.left.parent = node.right
+
+        # 2
+        right.left = node
+        node.parent = right
+
+        # 3
+        right.parent = parent
+        if not parent:
+            self.root = right
+        else:
+            if parent.left == node:
+                parent.left = right
+            else:
+                parent.right = right
+
+    def right_rotate(self, node):
+        '''
+             *        parent           parent
+             *       /                   /
+             *      node                left
+             *     /    \               / \
+             *    left  ry   ----->   ln  node
+             *   / \                     / \
+             * ln  rn                   rn ry
+        '''
+        parent = node.parent
+        left = node.left
+
+        # 1
+        node.left = left.right
+        if left.right != self.nil:
+            left.right.parent = node.left
+
+        # 2
+        left.right = node
+        node.parent = left
+
+        # 3
+        left.parent = parent
+        if not parent:
+            self.root = left
+        else:
+            if parent.left == node:
+                parent.left = left
+            else:
+                parent.right = left
+
+    def insert(self, value):
+        root = self.root
+        node = RBNode(value=value, color='RED')
+        node.left = self.nil
+        node.right = self.nil
+        node.parent = self.nil
+
+        if not root.value:
+            node.color = 'BLACK'
+            self.root = node
+
+        else:
+            while root != self.nil:
+                current_parent = root
+                if value < root.value:
+                    root = root.left
+                else:
+                    root = root.right
+
+            if value < current_parent.value:
+                current_parent.left = node
+            else:
+                current_parent.right = node
+            node.parent = current_parent
+
+            self.insert_fixup(node)
+
+
+    def insert_fixup(self, node):
+        # if node parent is black or node is root then everything is ok
+        while node.parent.color == "RED":
+
+            # node.parent.parent must exist because node.parent is red
+            # we deal the left situation first then right
+            if node.parent == node.parent.parent.left:
+                uncle = node.parent.parent.right
+
+                # case 1: uncle is red
+                if uncle.color == 'RED':
+                    node.parent.color = 'BLACK'
+                    uncle.color = 'BlACK'
+                    node.parent.parent.color = 'RED'
+                    node = node.parent.parent
+
+                # case 2: uncle is black and node is right child
+                elif node == node.parent.right:
+                    node = node.parent
+                    self.left_rotate(node)
+
+                # case 3: uncle is black and node is left child
+                node.parent.color = 'BLACK'
+                node.parent.parent.color = 'RED'
+                self.right_rotate(node.parent.parent)
+
+            # symetry
+            else:
+                uncle = node.parent.parent.left
+
+                # case 1: uncle is red
+                if uncle.color == 'RED':
+                    node.parent.color = 'BLACK'
+                    uncle.color = 'BlACK'
+                    node.parent.parent.color = 'RED'
+                    node = node.parent.parent
+
+                # case 2: uncle is black and node is left child
+                elif node == node.parent.left:
+                    node = node.parent
+                    self.right_rotate(node)
+
+                # case 3: uncle is black and node is right child
+                node.parent.color = 'BLACK'
+                node.parent.parent.color = 'RED'
+                self.left_rotate(node.parent.parent)
+
+        # keep root color black!
+        self.root.color = "BLACK"
+
+    def print_tree(self, label=True):
+        dot = Digraph(comment='RBTree')
+
+        def print_node(node, node_tag):
+            if node.left != self.nil:
+                left_tag = str(uuid.uuid1())
+                color = node.left.color
+                if color == 'RED':
+                    color = 'red'
+                else:
+                    color = 'green'
+                dot.node(left_tag, ':'.join([str(node.left.value), str(node.left.order)]), style='filled', color=color)
+                label_string = 'L' if label else ''
+                dot.edge(node_tag, left_tag, label=label_string)
+                print_node(node.left, left_tag)
+
+            if node.right != self.nil:
+                right_tag = str(uuid.uuid1())
+                color = node.right.color
+                if color == 'RED':
+                    color = 'red'
+                else:
+                    color = 'green'
+                dot.node(right_tag, ':'.join([str(node.right.value), str(node.right.order)]), style='filled', color=color)
+                label_string = 'R' if label else ''
+                dot.edge(node_tag, right_tag, label=label_string)
+                print_node(node.right, right_tag)
+
+        if self.root:
+            root_tag = str(uuid.uuid1())
+            dot.node(root_tag, ':'.join([str(self.root.value), str(self.root.order)]), style='filled', color='green')
+            print_node(self.root, root_tag)
+
+        # define file name by script name
+        base_name = os.path.basename(__file__)[:-3]
+        save_path = base_name +'.gv'
+        dot.render(save_path)
+
+    def preorder(self, root):
+        if not root.value:
+            return
+
+        print(root.value)
+        self.preorder(root.left)
+        self.preorder(root.right)
+
+if __name__ == '__main__':
+    #unsolved case
+    #[3, 41, 30, 71, 63, 24, 43, 68, 78, 27]
+    element_list = list(np.random.choice(list(range(100)), 10, replace=False))
+    print(element_list)
+    rb_tree = RBTree(element_list)
+    rb_tree.preorder(rb_tree.root)
+    rb_tree.print_tree()
