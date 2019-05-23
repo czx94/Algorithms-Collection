@@ -343,8 +343,6 @@ class RBTree(BST):
 
         node.color = 'BLACK'
 
-
-
     def preorder(self, root):
         if not root.value:
             return
