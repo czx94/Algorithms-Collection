@@ -16,6 +16,7 @@ class BST(BinaryTree):
             self.root = Node(element)
             return
 
+        parent = root
         while root.value:
             if root.value > element:
                 if not root.left:
@@ -27,6 +28,7 @@ class BST(BinaryTree):
                 root = root.right
 
         root.value = element
+        root.parent = parent
 
     def search(self, element):
         root = self.root

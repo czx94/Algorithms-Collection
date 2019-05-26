@@ -1,7 +1,7 @@
 '''
 Print each node of a linkedlist from end to start
 '''
-from BasicDataStructure import LinkedList
+from BasicDataStructure.LinkedList import LinkedList
 import numpy as np
 
 # stack
@@ -31,6 +31,6 @@ def solution2(linkedlist):
 if __name__ == '__main__':
     list_elements = list(np.random.choice(100, size=10, replace=False))
     print(list_elements)
-    linkedlist = LinkedList.LinkedList(list_elements, 12)
+    linkedlist = LinkedList(list_elements, 12)
     solution1(linkedlist)
     solution2(linkedlist)

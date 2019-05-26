@@ -4,11 +4,12 @@ import uuid
 import os
 
 class Node(object):
-    def __init__(self, value=None, left=None, right=None):
+    def __init__(self, value=None, left=None, right=None, parent=None):
         self.value = value
         self.left = left
         self.right = right
         self.order = None
+        self.parent = parent
 
 
 class BinaryTree(object):
@@ -16,7 +17,7 @@ class BinaryTree(object):
     Common binary tree, generated randomly
     Support several travesal methods
     '''
-    def __init__(self, elements, root=None):
+    def __init__(self, elements=[], root=None):
         self.elements = elements
         self.root = root
 
@@ -41,6 +42,7 @@ class BinaryTree(object):
             return
 
         while root.value:
+            parent = root
             if np.random.random() > 0.5:
                 if not root.left:
                     root.left = Node()
@@ -51,6 +53,13 @@ class BinaryTree(object):
                 root = root.right
 
         root.value = element
+        root.parent = parent
+
+    def insert_to_node(self, root, element, subtree='left'):
+        if subtree == 'left':
+            root.left = Node(element)
+        else:
+            root.right = Node(element)
 
     # preorder recursive travesal
     def preorder(self, root):
@@ -65,14 +74,18 @@ class BinaryTree(object):
 
     # preorder iterative travesal
     def preorder_iterative(self, root):
+        order_list = []
         candidate_nodes = [root]
         while candidate_nodes:
             current_node = candidate_nodes.pop()
             if current_node:
                 current_node.order = self.count
                 self.count += 1
+                order_list.append(current_node.value)
                 candidate_nodes.append(current_node.right)
                 candidate_nodes.append(current_node.left)
+
+        return order_list
 
     # inorder recursive travesal
     def inorder(self, root):
@@ -93,7 +106,8 @@ class BinaryTree(object):
 
     # inorder iterative travesal
     def inorder_iterative(self, root):
-        candidate_nodes = [root]
+        order_list = []
+        candidate_nodes = []
         while candidate_nodes or root:
             # visit always the left subtree till the end and append it to the stack
             while root:
@@ -105,7 +119,10 @@ class BinaryTree(object):
                 root = candidate_nodes.pop()
                 root.order = self.count
                 self.count += 1
+                order_list.append(root.value)
                 root = root.right
+
+        return order_list
 
     # postorder resursive travesal
     def postorder(self, root):
@@ -126,6 +143,7 @@ class BinaryTree(object):
 
     # postorder iterative travesal
     def postorder_iterative(self, root):
+        order_list = []
         candidate_nodes = [root]
         final_iteration = []
 
@@ -145,9 +163,13 @@ class BinaryTree(object):
             node = final_iteration.pop()
             node.order = self.count
             self.count += 1
+            order_list.append(node.value)
+
+        return order_list
 
     # levelorder travesal using 2 stacks
     def levelorder(self):
+        order_list = []
         candidate_layer = [self.root]
 
         while candidate_layer:
@@ -156,14 +178,31 @@ class BinaryTree(object):
             for node in this_layer:
                 node.order = self.count
                 self.count += 1
+                order_list.append(node.value)
 
                 if node.left:
                     candidate_layer.append(node.left)
                 if node.right:
                     candidate_layer.append(node.right)
 
-    def search(self):
-        raise Exception('Not implemented error')
+        return order_list
+
+    def search(self, element):
+        '''
+        :param element: the value of the node to search
+        :return: the searched node, if not existing return False
+        '''
+        candidates = [self.root]
+        while candidates:
+            current_node = candidates.pop()
+            if current_node:
+                if current_node.value == element:
+                    return current_node
+                else:
+                    candidates += [current_node.left, current_node.right]
+
+        return False
+
 
     def print_tree(self, label=True):
 
@@ -199,5 +238,5 @@ class BinaryTree(object):
 if __name__ == '__main__':
     element_list = list(np.random.choice(list(range(100)), 15))
     binary_tree = BinaryTree(element_list)
-    binary_tree.postorder_iterative(binary_tree.root)
+    print(binary_tree.inorder_iterative(binary_tree.root))
     binary_tree.print_tree()
