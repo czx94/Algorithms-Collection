@@ -15,7 +15,7 @@ class LinkedList(object):
         self.size = n
         self.root = None
         self.linkedlist_build()
-        self.show()
+        # self.show()
 
     def linkedlist_build(self):
         self.root = Node(self.linkedlist[0])

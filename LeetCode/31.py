@@ -27,7 +27,6 @@ class Solution(object):
                 nums[head + 1:] = sorted(nums[head + 1:])
                 return nums
 
-
     def nextPermutation2(self, nums):
         """
         :type nums: List[int]

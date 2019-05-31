@@ -26,6 +26,12 @@ def partition(list_object):
     list_object[-1], list_object[count] = list_object[count], list_object[-1]
     return count, list_object
 
+def quick_sort_3way(list_object):
+    pass
+
+def quick_sort_dual_pivot(list_object):
+    pass
+
 if __name__ == '__main__':
     list_object = list(np.random.choice(100, size=10, replace=False))
     sorted_list = quick_sort(list_object)
