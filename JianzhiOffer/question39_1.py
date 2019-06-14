@@ -1,7 +1,9 @@
 '''
 Print the number n, card(n) > len(list)/2
+leetcode 169
 '''
 
+# too slow
 def solution1(list_to_test):
     return findKthLargest(list_to_test, len(list_to_test)//2+1)
 
@@ -43,8 +45,6 @@ def solution2(list_to_test):
                 count -= 1
 
     return number
-
-
 
 
 if __name__ == '__main__':

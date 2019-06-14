@@ -1,5 +1,6 @@
 '''
 Output how many times 1 appears in number 1 ... to n
+leetcode 233
 '''
 
 # naive solution

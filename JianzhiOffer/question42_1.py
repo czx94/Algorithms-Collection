@@ -1,5 +1,6 @@
 '''
 The maximum sum of a continuous subset
+leetcode 53
 '''
 
 # this solution is good for sum > 0, but cannot deal with the case sum < 0
