@@ -115,8 +115,8 @@ class BinaryTree(object):
                 root = root.left
 
             # while there's no left subtree, pop the stack and note the node then visit the right subtree
-            if not root:
-                root = candidate_nodes.pop()
+            root = candidate_nodes.pop()
+            if root:
                 root.order = self.count
                 self.count += 1
                 order_list.append(root.value)
