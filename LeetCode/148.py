@@ -72,7 +72,7 @@ class Solution1(object):
         return combined_list
 
 # solution 2: split list by slow and fast pointers
-class Solution1(object):
+class Solution2(object):
     def sortList(self, head):
         """
         :type head: ListNode

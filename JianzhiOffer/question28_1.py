@@ -56,9 +56,9 @@ def solution3(root):
     stack = [[root.left, root.right]]
 
     while stack:
-        node = stack.pop(0)
-        left = node.left
-        right = node.right
+        nodes = stack.pop(0)
+        left = nodes[0]
+        right = nodes[1]
 
         if not left and not right:
             continue
@@ -66,11 +66,12 @@ def solution3(root):
             return False
 
         if left.val == right.val:
-            stack.append(0, [left.left, right.right])
-            stack.append(0, [left.right, right.left])
+            stack.insert(0, [left.left, right.right])
+            stack.insert(0, [left.right, right.left])
         else:
             return False
 
+    return True
 
 
 if __name__ == '__main__':
