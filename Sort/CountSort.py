@@ -5,14 +5,11 @@ def count_sort(list_object, lower, upper):
     count_dict = dict()
     sorted_list = [0] * len(list_object)
 
-    for i in range(lower, upper):
-        count_dict[i] = 0
-
     for value in list_object:
-        count_dict[value] += 1
+        count_dict[value] = count_dict.get(value, 0) + 1
 
     for i in range(lower+1, upper):
-        count_dict[i] += count_dict[i-1]
+        count_dict[i] = count_dict.get(i, 0) + count_dict.get(i - 1, 0)
 
     for i in range(len(list_object)):
         sorted_list[count_dict[list_object[i]]-1] = list_object[i]

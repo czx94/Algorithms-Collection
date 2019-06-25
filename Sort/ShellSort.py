@@ -8,11 +8,10 @@ def shell_sort(list_object):
 
     while step >= 1:
         for i in range(step, len(list_object)):
-            j = i
-            while (j - step) >=0:
-                if list_object[j] < list_object[j - step]:
-                    list_object[j], list_object[j - step] = list_object[j - step], list_object[j]
-                    j -= step
+            while (i - step) >= 0:
+                if list_object[i] < list_object[i - step]:
+                    list_object[i], list_object[i - step] = list_object[i - step], list_object[i]
+                    i -= step
                 else:
                     break
 
