@@ -29,12 +29,5 @@ def recursive(root, sum, current_path, result):
         if root.right:
             recursive(root.right, sum, current_path, result)
 
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
+    pass

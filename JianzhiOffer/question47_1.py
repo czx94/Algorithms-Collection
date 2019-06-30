@@ -1,5 +1,6 @@
 '''
 Find the max sum of in a route, each time you can just move to the right or to the bottom
+leetcode 64
 '''
 import numpy as np
 

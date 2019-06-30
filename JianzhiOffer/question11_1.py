@@ -1,5 +1,7 @@
 '''
 Smallest number in a rotated array
+leetcode 153
+leetcode 154
 '''
 import numpy as np
 

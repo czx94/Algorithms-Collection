@@ -1,5 +1,6 @@
 '''
 find the first element non-repeated
+leetcode 387
 '''
 
 def solution1(string):

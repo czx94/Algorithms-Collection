@@ -1,5 +1,6 @@
 '''
 Move all the odd number to the beginning of a list
+leetcode 905
 '''
 import numpy as np
 

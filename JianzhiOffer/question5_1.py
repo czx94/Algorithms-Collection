@@ -1,5 +1,7 @@
 '''
 Replace the 'spaces' in a given string
+
+lintcode 212
 '''
 def solution1(string):
     string = string.replace(' ', '%20')

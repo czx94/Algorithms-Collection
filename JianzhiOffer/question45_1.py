@@ -2,6 +2,7 @@
 Given a list of non negative integers, arrange them such that they form the smallest number.
 leetcode 179
 '''
+
 from functools import cmp_to_key
 
 def solution1(nums):

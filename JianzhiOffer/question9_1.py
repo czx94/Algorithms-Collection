@@ -1,5 +1,6 @@
 '''
 Implemente a queue with two stacks
+leetcode 232
 '''
 import numpy as np
 

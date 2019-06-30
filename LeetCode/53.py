@@ -1,3 +1,4 @@
+import copy
 class Solution(object):
     def maxSubArray(self, nums):
         """
@@ -7,13 +8,27 @@ class Solution(object):
         if not nums:
             return None
 
+        current_sum = 0
         max_sum = nums[0]
         element_list = []
+
         for num in nums:
             element_list.append(num)
-            current_sum = sum(element_list)
+            current_sum += num
+            if current_sum >= max_sum:
+                max_list = copy.copy(element_list)
+                max_sum = current_sum
+
             if current_sum < 0:
                 element_list = []
-            max_sum = max(current_sum, max_sum)
+                current_sum = 0
+
+        print(max_list)
 
         return max_sum
+
+if __name__ == '__main__':
+    solution = Solution()
+    cases = [[-2,1,-3,4,-1,2,1,-5,4], [-1,-2,-3]]
+    for case in cases:
+        print(solution.maxSubArray(case))

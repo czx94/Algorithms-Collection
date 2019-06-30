@@ -1,5 +1,6 @@
 '''
 Robots movement range
+
 '''
 # dfs + back track
 def solution1(start_point, threshold):

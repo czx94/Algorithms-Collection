@@ -1,5 +1,7 @@
 '''
 Translate a number into string, calculate how many combinations are there
+leetcode 17
+acwing 59
 '''
 
 translate_table = {}
