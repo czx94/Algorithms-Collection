@@ -1,38 +1,38 @@
 '''
-Count the one's in the binary representation of a given number
+Count the one's in the binary representation of a given n
 leetcode 191
 '''
 
-# works only for positive number
-def solution1(number):
+# works only for positive n
+def solution1(n):
     count = 0
-    while number:
-        if number & 1:
+    while n:
+        if n & 1:
             count += 1
-        number >>= 1
+        n >>= 1
     return count
 
 # slow
-def solution2(number):
+def solution2(n):
     count = 0
     flag = 1
-    while flag <= number:
-        if number & flag:
+    while flag <= n:
+        if n & flag:
             count += 1
         flag <<= 1
     return count
 
 # magical solution
-def solution3(number):
+def solution3(n):
     count = 0
-    while number:
+    while n:
         count += 1
-        number &= number - 1
+        n &= n - 1
     return count
 
 
 if __name__ == '__main__':
-    number = 111
-    print(solution1(number))
-    print(solution2(number))
-    print(solution3(number))
+    n = 111
+    print(solution1(n))
+    print(solution2(n))
+    print(solution3(n))

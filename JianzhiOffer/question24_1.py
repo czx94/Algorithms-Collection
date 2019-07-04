@@ -1,6 +1,8 @@
 '''
 Reverse linkedlist
 leetcode 206
+leetcode 92
+leetcode 25
 '''
 import copy
 
@@ -30,13 +32,15 @@ def solution2(head):
     prev = None
     while head:
         current = head
-        current.next, prev, head = prev, current, head.next
+        head = head.next
+        current.next = prev
+        prev = current
 
     return prev
 
 # recursive
 def solution3(head):
-    if not head or head.next:
+    if not head or not head.next:
         return head
 
     new_head = solution3(head.next)

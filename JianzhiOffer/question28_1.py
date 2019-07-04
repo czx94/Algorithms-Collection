@@ -3,7 +3,7 @@ Given a binary tree, check whether it is a mirror of itself (ie, symmetric aroun
 leetcode 101
 '''
 
-# level order travelsal and ...
+# level order travelsal and this solution is not good
 def solution1(root):
     result = list()
     if root:

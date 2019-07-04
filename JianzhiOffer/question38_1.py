@@ -3,7 +3,6 @@ Permutation in String
 leetcode 46
 '''
 
-
 class Solution(object):
     def permute(self, nums):
         """

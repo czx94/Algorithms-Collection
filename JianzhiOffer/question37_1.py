@@ -3,7 +3,6 @@ Serialize and Deserialize Binary Tree
 leetcode 297
 '''
 
-
 # Definition for a binary tree node.
 class TreeNode(object):
     def __init__(self, x):

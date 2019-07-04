@@ -7,7 +7,7 @@ leetcode 142 ！！！
 import copy
 def solution1(head):
     if not head:
-        return head
+        return False
 
     fast = head.next
     slow = head
@@ -16,16 +16,9 @@ def solution1(head):
         fast = fast.next.next
         slow = slow.next
         if fast == slow:
-            break
-    else:
-        return None
+            return True
 
-    while head != slow:
-        slow = slow.next
-        head = head.next
-
-    return True
-
+    return False
 
 
 '''

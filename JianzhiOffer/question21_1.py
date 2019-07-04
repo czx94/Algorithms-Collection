@@ -15,8 +15,7 @@ def solution1(element_list):
         while head < tail and element_list[tail] & 1 == 0:
             tail -= 1
 
-        if head < tail:
-            element_list[head], element_list[tail] = element_list[tail], element_list[head]
+        element_list[head], element_list[tail] = element_list[tail], element_list[head]
 
     return element_list
 

@@ -21,4 +21,3 @@ class Solution(object):
             base *= 10
 
         return count
-

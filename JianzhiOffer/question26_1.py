@@ -3,7 +3,6 @@ Subtree of a given tree?
 leetcode 572
 '''
 
-
 def solution1(s, t):
     """
     :type s: TreeNode

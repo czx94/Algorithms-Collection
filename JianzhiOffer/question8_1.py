@@ -9,17 +9,36 @@ def solution1(btree, element):
     node = btree.search(element)
     print(node.value)
     if node.right:
-        next_node = btree.inorder_iterative(node.right)[0]
+        node = node.right
+        while node.left:
+            node = node.left
+        return node
 
-    else:
+    elif node.parent:
         parent = node.parent
         if node == parent.left:
-            next_node = parent.value
+            return parent
         else:
-            grandparent = parent.parent
-            next_node = grandparent.value
+            if parent.parent:
+                return parent.parent
 
-    return next_node
+    return None
+
+# correct one
+def solution2(node):
+    if node.right:
+        node = node.right
+        while node.left:
+            node = node.left
+        return node
+
+    while node.father:
+        father = node.father
+        if node == father.left:
+            return father
+        node = father
+
+    return None
 
 if __name__ == '__main__':
     element_list = list(np.random.choice(100, size=20, replace=False))

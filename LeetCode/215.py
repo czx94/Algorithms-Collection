@@ -51,7 +51,6 @@ class Solution(object):
         return nums[len(nums)-k]
 
 
-
 if __name__ == '__main__':
     solution = Solution()
     cases = [

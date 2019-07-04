@@ -30,14 +30,11 @@ def solution1(preorder, inorder):
 
             # split inorder
             inorder_left = inorder[:root_index]
-            if root_index != len(inorder) - 1:
-                inorder_right = inorder[root_index+1:]
-            else:
-                inorder_right = []
+            inorder_right = inorder[root_index+1:]
 
             # split preorder
-            preorder_left = preorder[1:1+len(inorder_left)]
-            preorder_right = preorder[1+len(inorder_left):]
+            preorder_left = preorder[1:1+root_index]
+            preorder_right = preorder[1+root_index:]
 
             #recursion for left subtree
             #for left subtree
@@ -49,14 +46,13 @@ def solution1(preorder, inorder):
 
     return btree
 
+
+
 '''
-Iterative solution
+Still recursive solution
 '''
 def solution2(preorder, inorder):
-    btree = BinaryTree()
-
-
-    return btree
+    pass
 
 if __name__ == '__main__':
     element_list = list(np.random.choice(100, size=20, replace=False))
@@ -69,6 +65,6 @@ if __name__ == '__main__':
     inorder = reconstructed_btree.inorder_iterative(reconstructed_btree.root)
     print(preorder, inorder)
     reconstructed_btree = solution2(preorder, inorder)
-    reorder = reconstructed_btree.preorder_iterative(reconstructed_btree.root)
+    preorder = reconstructed_btree.preorder_iterative(reconstructed_btree.root)
     inorder = reconstructed_btree.inorder_iterative(reconstructed_btree.root)
     print(preorder, inorder)
