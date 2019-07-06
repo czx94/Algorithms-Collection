@@ -50,6 +50,48 @@ class Solution(object):
 
         return nums[len(nums)-k]
 
+    # heap sort
+    def findKthLargest4(self, nums, k):
+        self.nums = nums
+        self.build_max_heap()
+
+        result = []
+        for i in range(k):
+            nums[0], nums[-1] = nums[-1], nums[0]
+            result.append(nums.pop())
+            self.max_heapify(1)
+
+        return result[-1]
+
+    def build_max_heap(self):
+        for i in range(len(self.nums) // 2, 0, -1):
+            self.max_heapify(i)
+
+    def max_heapify(self, n):
+        left = self.left(n)
+        right = self.right(n)
+
+        if left <= len(self.nums) and self.nums[n - 1] < self.nums[left - 1]:
+            max_index = left
+        else:
+            max_index = n
+
+        if right <= len(self.nums) and self.nums[max_index - 1] < self.nums[right - 1]:
+            max_index = right
+
+        if max_index != n:
+            self.nums[max_index - 1], self.nums[n - 1] = self.nums[n - 1], self.nums[max_index - 1]
+            self.max_heapify(max_index)
+
+    def left(self, n):
+        return 2 * n
+
+    def right(self, n):
+        return 2 * n + 1
+
+    def parent(self, n):
+        return n // 2
+
 
 if __name__ == '__main__':
     solution = Solution()

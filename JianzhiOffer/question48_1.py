@@ -2,6 +2,7 @@
 The longest substring without repeated character
 leetcode 3
 '''
+
 def solution1(string):
     position_dict = dict()
     max_length = 0
@@ -22,7 +23,8 @@ def solution1(string):
     return max_length
 
 if __name__ == '__main__':
-    string = 'arabcacfr'
-    length = solution1(string)
-    print(length)
+    strings = ['arabcacfr', "abba"]
+    for string in strings:
+        length = solution1(string)
+        print(length)
 

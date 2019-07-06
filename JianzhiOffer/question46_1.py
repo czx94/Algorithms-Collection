@@ -24,6 +24,21 @@ def solution1(num):
 
     return recursive(str(num))
 
+# acwing 59
+class Solution:
+    def getTranslationCount(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if len(s) <= 1:
+            return 1
+
+        else:
+            if int(s[:2]) <= 25 and int(s[0]) != 0:
+                return (self.getTranslationCount(s[2:]) + self.getTranslationCount(s[1:]))
+            else:
+                return self.getTranslationCount(s[1:])
 
 if __name__ == '__main__':
     num = 122582625

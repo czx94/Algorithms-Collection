@@ -2,7 +2,6 @@
 Given a non-empty array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
 leetcode 137
 '''
-import numpy as np
 
 def solution1(nums):
     """

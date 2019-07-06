@@ -1,6 +1,6 @@
 '''
 A given list is monotone increasing，every element is a int and unique, find a element with its index equals to its value
-https://www.acwing.com/problem/content/65/?time=1560688667158
+acwing69
 '''
 
 def solution1(nums):

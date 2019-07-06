@@ -1,5 +1,5 @@
 '''
-https://www.acwing.com/problem/content/72/
+acwing72
 '''
 
 def solution1(target):
