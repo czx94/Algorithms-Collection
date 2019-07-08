@@ -235,6 +235,8 @@ class BinaryTree(object):
         save_path = base_name +'.gv'
         self.dot.render(save_path)
 
+
+
 if __name__ == '__main__':
     element_list = list(np.random.choice(list(range(100)), 15))
     binary_tree = BinaryTree(element_list)

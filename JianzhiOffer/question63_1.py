@@ -1,6 +1,7 @@
 '''
 leetcode 121. Best Time to Buy and Sell Stock
 leetcode 122 similar
+leetcode 123
 '''
 
 def solution1(prices):

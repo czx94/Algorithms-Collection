@@ -44,22 +44,6 @@ class Solution(object):
                 return (max_of_left + min_of_right) / 2
 
 
-        # while head <= tail:
-        #     i = (head+tail) >> 1
-        #     j = half_len - i
-        #     print(i, j)
-        #     if nums1[i-1] < nums2[j] and nums1[i] > nums2[j-1]:
-        #         break
-        #     elif nums1[i-1] > nums2[j]:
-        #         tail = i - 1
-        #     elif nums1[i] < nums2[j-1]:
-        #         head = i + 1
-        #
-        # if (l1 + l2) & 1:
-        #     return max(nums1[i-1], nums2[j-1])
-        # else:
-        #     return (max(nums1[i-1], nums2[j-1]) + min(nums1[i], nums2[j]))/2
-
 if __name__ == '__main__':
     solution = Solution()
     nums1 = [1, 3]
