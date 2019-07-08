@@ -1,5 +1,6 @@
 '''
 construct a func add without +-*/
+leetcode 371
 '''
 import random
 def solution1(n1, n2):

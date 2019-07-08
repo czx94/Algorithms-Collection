@@ -54,7 +54,7 @@ class Solution(object):
 
 if __name__ == '__main__':
     solution = Solution()
-    cases = [[1,3,2],[2,3,1],[3,1,2],[3,2,1],[1,2,3]]
+    cases = [[1,3,2],[2,3,1],[3,1,2],[3,2,1],[1,2,3], [1,1,5], [1, 5, 1]]
     for case in cases:
         print('######')
         print('input:',case)

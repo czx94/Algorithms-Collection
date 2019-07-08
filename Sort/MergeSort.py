@@ -1,11 +1,10 @@
 import numpy as np
-import math
 
 def merge_sort(list_object):
     object_number = len(list_object)
     if len(list_object) == 1:
         return list_object
-    split_point = math.floor(object_number/2)
+    split_point = object_number//2
 
     left = merge_sort(list_object[:split_point])
     right = merge_sort(list_object[split_point:])
