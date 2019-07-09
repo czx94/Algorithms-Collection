@@ -4,15 +4,17 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        stack = [['', 1]]
+        stack = [["", 1]]
+        num = ""
         for ch in s:
             if ch.isdigit():
-                num = int(ch)
+                num += ch
             elif ch == '[':
-                stack.append(['', num])
+                stack.append(["", num])
+                num = ''
             elif ch == ']':
                 string, times = stack.pop()
-                stack[-1][0] += string * times
+                stack[-1][0] += int(times) * string
             else:
                 stack[-1][0] += ch
 
