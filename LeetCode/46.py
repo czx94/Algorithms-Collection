@@ -26,7 +26,10 @@ class Solution(object):
     def dfs(self, nums, current):
         if not nums:
             self.result.append(current)
+            return
 
         for i in range(len(nums)):
             self.dfs(nums[:i]+nums[i+1:], current+[nums[i]])
+
+
 

@@ -35,9 +35,6 @@ def count_sort(nums):
 
     return new_list
 
-def head_sort():
-    pass
-
 def insertion_sort(nums):
     if not nums:
         return nums
@@ -62,7 +59,6 @@ def merge_sort(nums):
     l1 = merge_sort(nums[:divide])
     l2 = merge_sort(nums[divide:])
     return merge(l1, l2)
-
 
 def merge(l1, l2):
     '''
