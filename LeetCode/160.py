@@ -62,4 +62,50 @@ class Solution(object):
 
         return intersect
 
+    # find the loop of the concat list
+    def getIntersectionNode3(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if not headA or not headB:
+            return None
 
+        last = headA
+        while last.next:
+            last = last.next
+
+        last.next = headB
+
+        slow = headA
+        fast = headA
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                # like find the entry of a loop in likedlist
+                fast = headA
+                while fast != slow:
+                    fast, slow = fast.next, slow.next
+
+                last.next = None
+                return slow
+
+        last.next = None
+        return None
+
+    def getIntersectionNode4(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if not headA or not headB:
+            return None
+
+        nodeA, nodeB = headA, headB
+        while nodeA != nodeB:
+            nodeA = headB if nodeA == None else nodeA.next
+            nodeB = headA if nodeB == None else nodeB.next
+
+        return nodeA
