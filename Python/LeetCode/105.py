@@ -1,5 +1,3 @@
-from BasicDataStructure.Tree.BinaryTree import BinaryTree, Node
-
 class TreeNode(object):
     def __init__(self, x):
         self.val = x

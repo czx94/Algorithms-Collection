@@ -1,7 +1,7 @@
 '''
 Print each node of a linkedlist from end to start
 '''
-from BasicDataStructure.LinkedList import LinkedList
+from LinkedList import LinkedList
 import numpy as np
 
 # stack

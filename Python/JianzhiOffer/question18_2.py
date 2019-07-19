@@ -1,4 +1,4 @@
-from BasicDataStructure.LinkedList import LinkedList
+from LinkedList import LinkedList
 import numpy as np
 
 def solution1(linked_list):

@@ -3,7 +3,7 @@ Find the next node of the given node in inorder travesal
 acwing 19
 '''
 import numpy as np
-from BasicDataStructure.Tree.BinaryTree import BinaryTree
+from BinaryTree import BinaryTree
 
 def solution1(btree, element):
     node = btree.search(element)
