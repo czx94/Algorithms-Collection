@@ -1,3 +1,0 @@
-/Users/caizixiang/czx/code/Algorithms-Collection/Cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/caizixiang/czx/code/Algorithms-Collection/Cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/caizixiang/czx/code/Algorithms-Collection/Cpp/cmake-build-debug/CMakeFiles/Algorithm.dir
