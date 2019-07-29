@@ -1,8 +1,10 @@
 //
 // Created by caizixiang on 2019-07-20.
 //
-using namespace std;
+#include <iostream>
 #include <unordered_map>
+#include <vector>
+using namespace std;
 
 class Solution {
 public:
@@ -25,9 +27,3 @@ public:
     }
 };
 
-int main() {
-    Solution two_sum;
-    vector<vector<int>> cases = [[2, 7, 11, 15], [0, 2, 4, 9]];
-    vector<int> targets = [9, 11];
-
-}
