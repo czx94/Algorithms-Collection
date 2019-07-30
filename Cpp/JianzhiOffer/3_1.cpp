@@ -37,17 +37,25 @@ int solution1(vector<int> nums)
 
 int solution2(vector<int> nums)
 {
-    unordered_map<int, int> hash_map;
-    for (auto this_num: nums)
+    int tail = nums.size() - 1, head = 0, mid;
+    while (head <= tail)
     {
-        hash_map[this_num] += 1;
+        mid = (head + tail) >> 1;
+        int count = 0;
+        for (int num: nums)
+        {
+            if (num <= mid)
+                count++;
+        }
+
+        if (count>mid)
+            tail = mid - 1;
+        else
+            head = mid + 1;
     }
 
-    for (const auto n : hash_map)
-    {
-        if (n.second == 2)
-            return n.first;
-    }
+    return head;
+
 }
 
 int main()
