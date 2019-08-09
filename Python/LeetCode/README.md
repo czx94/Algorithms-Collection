@@ -1,0 +1,15 @@
+## Classification according to resolution Method
+- DP:
+- DFS: 
+- BFS:
+- Tree
+- Sort:
+- Stack:
+- String: 3
+- Tricky:
+- Hashmap:1, 
+- Linked List: 2, 
+- Union set: 128, 547
+- Two pointer: 
+- Binary search:
+- Bit manipulation:
