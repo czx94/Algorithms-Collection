@@ -44,6 +44,7 @@ class BST(BinaryTree):
 
 if __name__ == '__main__':
     element_list = list(np.random.choice(list(range(100)), 15))
+    print(element_list)
     bst = BST(element_list)
     bst.inorder(bst.root)
     bst.print_tree()
