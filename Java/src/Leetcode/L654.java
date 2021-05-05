@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class L654 {
 }
 
-class Solution {
+class Solution_654 {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         if (nums.length == 0)
         {

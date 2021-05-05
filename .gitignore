@@ -31,5 +31,15 @@
 *.out
 *.app
 
+.DS_Store
+
 cmake-build-debug/
 build/
+*.gv
+*.pdf
+__pycache__/
+
+# java
+out/
+.idea/
+*.iml
